@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView display;
     Button button;
     public int i, toPhone, rdmIndex, rdmNum1, rdmNum2, userAns, actAns;
-    TextView number1, number2, operator;
+    TextView number1, number2, operator, operator2;
     EditText input;
     public String rdmOperator;
     public String[] operationArr = {"+", "-", "/", "*"};
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String SUCCESS_MSG = "Your wallpaper is successfully changed!.";
     String ERROR_MSG = "Your answer is wrong! Please try again.";
     String EXCEPTION_MSG = "Something went wrong! Please try again.";
+    String VALIDATION_MSG = "Please enter valid number.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
         final TextView number1 = (TextView)findViewById(R.id.textView1);
         final TextView operator = (TextView)findViewById(R.id.textView2);
         final TextView number2 = (TextView)findViewById(R.id.textView3);
+        final TextView operator2 = (TextView)findViewById(R.id.textView4);
         final EditText input = (EditText) findViewById(R.id.edit_text1);
 
         button.setEnabled(false);
-        input.setVisibility(View.INVISIBLE);
+        input.setEnabled(false);
+        operator2.setVisibility(View.INVISIBLE);
 
         for (i = 1; i <= 13; i++){
             final ImageView iv = new ImageView(this);
@@ -70,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
                     number1.setText(Integer.toString(rdmNum1));
                     number2.setText(Integer.toString(rdmNum2));
                     operator.setText(operationArr[rdmIndex]);
+                    operator2.setVisibility(View.VISIBLE);
+                    input.setEnabled(true);
                     button.setEnabled(true);
-                    input.setVisibility(View.VISIBLE);
 
                     int ide = iv.getId();
                     String b = "pic" + Integer.toString(ide);
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                if(!input.getText().toString().isEmpty()) {
                     rdmOperator = operationArr[rdmIndex];
                     userAns = Integer.parseInt(input.getText().toString());
                     actAns = calActAns();
@@ -98,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
                             toastMsg(SUCCESS_MSG);
                             input.setText(null);
                             button.setEnabled(false);
-                            input.setVisibility(View.INVISIBLE);
+                            input.setEnabled(false);
+//                            input.setVisibility(View.INVISIBLE);
                         } catch(IOException e) {
                             e.printStackTrace();
                             toastMsg(EXCEPTION_MSG);
@@ -111,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                         number2.setText(Integer.toString(rdmNum2));
                         operator.setText(operationArr[rdmIndex]);
                     }
+                } else {
+                    toastMsg(VALIDATION_MSG);
+                }
                 }
             });
 
@@ -157,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         number1.setVisibility(View.INVISIBLE);
         number2.setVisibility(View.INVISIBLE);
         operator.setVisibility(View.INVISIBLE);
+        operator2.setVisibility(View.INVISIBLE);
         input.setVisibility(View.INVISIBLE);
     }
 
