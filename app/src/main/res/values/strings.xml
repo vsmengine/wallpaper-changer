@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">picture_changer</string>
-    <string name="activate_button_Wallpaper">picture-changer</string>
+    <string name="app_name">Wallpaper Changer</string>
+    <string name="activate_button_Wallpaper">Change Wallpaper</string>
+    <string name="math_equal_operator">=</string>
 </resources>

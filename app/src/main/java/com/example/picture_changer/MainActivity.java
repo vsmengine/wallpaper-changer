@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText input = (EditText) findViewById(R.id.edit_text1);
 
         button.setEnabled(false);
-        input.setEnabled(false);
+        input.setVisibility(View.INVISIBLE);
         operator2.setVisibility(View.INVISIBLE);
 
         for (i = 1; i <= 13; i++){
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     number2.setText(Integer.toString(rdmNum2));
                     operator.setText(operationArr[rdmIndex]);
                     operator2.setVisibility(View.VISIBLE);
+                    input.setVisibility(View.VISIBLE);
                     input.setEnabled(true);
                     button.setEnabled(true);
 
@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                             input.setText(null);
                             button.setEnabled(false);
                             input.setEnabled(false);
-//                            input.setVisibility(View.INVISIBLE);
                         } catch(IOException e) {
                             e.printStackTrace();
                             toastMsg(EXCEPTION_MSG);
@@ -132,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         rdmIndex = arrIndex.nextInt(operationArr.length);
         rdmNum2 = (int)(Math.random()*10 + 1);
         rdmNum1 = (int)(Math.random()*100 + rdmNum2);
-
     }
 
     public void initMathLogic() {
